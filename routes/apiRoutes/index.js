@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { writeFile, readFile } = require('fs');
+const { writeFileSync, readFile } = require('fs');
 const path = require('path');
 const { v4: uuidv4 } = require("uuid");
 
@@ -33,10 +33,10 @@ router.post('/notes', (req, res) => {
         };
         allNotes.push(newNote);
 
-        writeFile(path.join(__dirname, '../../db/db.json'), JSON.stringify(allNotes), (err) => {
+        writeFileSync(path.join(__dirname, '../../db/db.json'), JSON.stringify(allNotes), (err) => {
             if (err) throw err;
-            res.status(201);
         });
+        res.status(201).json(allNotes);
     });
 
 });
